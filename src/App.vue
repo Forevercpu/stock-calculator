@@ -44,7 +44,7 @@ function syncQuantity() {
 <template>
   <main class="page-shell">
     <header class="topbar">
-      <div class="brand"><span class="brand-mark">算</span><span>交易差价</span></div>
+      <div class="brand">计算器</div>
       <button class="quiet-button" type="button" @click="clearAll">清空</button>
     </header>
 
