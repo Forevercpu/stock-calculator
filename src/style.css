@@ -8,8 +8,8 @@
   --muted: #7b828e;
   --line: #d9dde3;
   --paper: #fff;
-  --green: #19714f;
-  --red: #bb4338;
+  --rise: #d4473f;
+  --fall: #16805b;
 }
 
 * { box-sizing: border-box; }
@@ -22,6 +22,32 @@ button { color: inherit; }
 .brand { display: flex; gap: 8px; align-items: center; font-size: 14px; font-weight: 700; }
 .brand-mark { display: grid; place-items: center; width: 24px; height: 24px; color: #fff; background: var(--ink); border-radius: 6px; font-size: 11px; }
 .quiet-button { border: 0; background: transparent; color: var(--muted); cursor: pointer; padding: 6px; font-size: 12px; }
+.quick-panel { position: relative; overflow: hidden; margin-bottom: 10px; padding: 16px; }
+.quick-panel::after { content: "%"; position: absolute; right: -10px; top: -30px; color: rgba(212, 71, 63, .045); font-size: 150px; font-weight: 800; line-height: 1; pointer-events: none; }
+.quick-heading { position: relative; z-index: 1; display: flex; align-items: end; justify-content: space-between; margin-bottom: 14px; }
+.quick-heading h1 { margin: 1px 0 0; color: #171c22; font-size: 20px; line-height: 1; letter-spacing: -.03em; }
+.quick-heading p { margin: 0; color: var(--muted); font-size: 10px; }
+.eyebrow { color: var(--rise); font-size: 7px; font-weight: 800; letter-spacing: .18em; }
+.quick-layout { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(210px, .7fr); gap: 14px; align-items: stretch; }
+.quick-inputs { display: grid; grid-template-columns: 1fr 1.35fr; gap: 10px; align-items: start; }
+.percentage-field > span { display: block; margin: 0 0 5px 2px; color: #626977; font-size: 10px; font-weight: 600; }
+.percentage-control { display: grid; grid-template-columns: auto minmax(110px, 1fr); gap: 7px; }
+.percentage-control .number-field > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.direction-switch { display: grid; grid-template-columns: 1fr 1fr; padding: 3px; border: 1px solid #cfd4dc; border-radius: 8px; background: #f2f4f5; }
+.direction-switch button { min-width: 51px; border: 0; border-radius: 5px; background: transparent; color: var(--muted); cursor: pointer; font-size: 10px; font-weight: 700; }
+.direction-switch button.active { color: #fff; background: var(--rise); box-shadow: 0 2px 5px rgba(212, 71, 63, .2); }
+.direction-switch button:nth-child(2).active { background: var(--fall); box-shadow: 0 2px 5px rgba(22, 128, 91, .2); }
+.percentage-presets { display: flex; gap: 5px; margin-top: 6px; }
+.percentage-presets button { border: 1px solid #e0e4e8; border-radius: 999px; padding: 2px 8px; background: #fff; color: var(--muted); cursor: pointer; font-size: 8px; }
+.percentage-presets button:hover, .percentage-presets button.active { border-color: #dfaaa6; color: var(--rise); background: #fdf3f2; }
+.quick-result { display: flex; flex-direction: column; justify-content: center; min-height: 74px; padding: 12px 15px; border-left: 3px solid var(--rise); border-radius: 8px; background: #fdf1f0; }
+.quick-result > span { color: #87615e; font-size: 9px; }
+.quick-result strong { margin: 3px 0 4px; color: var(--rise); font-size: 25px; line-height: 1; letter-spacing: -.04em; }
+.quick-result p { margin: 0; color: #7d6866; font-size: 9px; }
+.quick-result p b { color: var(--rise); }
+.quick-result.decrease { border-left-color: var(--fall); background: #edf7f2; }
+.quick-result.decrease > span, .quick-result.decrease p { color: #557066; }
+.quick-result.decrease strong, .quick-result.decrease p b { color: var(--fall); }
 .calculator-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(245px, .8fr); gap: 10px; align-items: start; }
 .panel { background: var(--paper); border: 1px solid #e1e4e8; border-radius: 12px; box-shadow: 0 4px 18px rgba(27, 34, 43, .045); }
 .input-panel, .result-panel { padding: 16px; }
@@ -30,8 +56,8 @@ button { color: inherit; }
 .trade-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 9px; }
 .trade-head strong { display: flex; align-items: center; gap: 7px; font-size: 13px; }
 .trade-head i { width: 7px; height: 7px; border-radius: 50%; }
-.buy-dot { background: var(--green); }
-.sell-dot { background: #c68832; }
+.buy-dot { background: var(--rise); }
+.sell-dot { background: var(--fall); }
 .trade-head > span { color: var(--muted); font-size: 10px; }
 .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
 .number-field > span { display: block; margin: 0 0 5px 2px; color: #626977; font-size: 10px; font-weight: 600; }
@@ -49,7 +75,7 @@ button { color: inherit; }
 .trade-actions { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 10px; margin: 11px 0; }
 .trade-actions span { height: 1px; background: #eceef1; }
 .trade-actions button, .sync-button { border: 0; background: transparent; color: var(--muted); cursor: pointer; font-size: 10px; padding: 2px 0; }
-.trade-actions button:hover, .sync-button:hover { color: var(--green); }
+.trade-actions button:hover, .sync-button:hover { color: var(--rise); }
 .sync-button { display: block; margin: 6px 0 0 auto; }
 .notice { margin-top: 9px; padding: 7px 9px; color: #765d34; background: #faf3e7; border-radius: 6px; font-size: 10px; }
 
@@ -62,7 +88,7 @@ button { color: inherit; }
 .fee-content { margin-top: 9px; padding-top: 5px; border-top: 1px dashed var(--line); }
 .fee-row { display: grid; grid-template-columns: 1.15fr 1fr 1fr; gap: 7px; align-items: center; padding: 5px 0; }
 .switch-line { display: flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 600; }
-.switch-line input { accent-color: var(--green); }
+.switch-line input { accent-color: var(--rise); }
 .compact-field { display: flex; align-items: center; height: 29px; padding: 0 6px; border: 1px solid var(--line); border-radius: 6px; }
 .compact-field span, .compact-field b { color: var(--muted); font-size: 8px; font-weight: 500; white-space: nowrap; }
 .compact-field input { width: 100%; min-width: 0; border: 0; outline: 0; background: transparent; text-align: right; font-size: 10px; }
@@ -71,12 +97,12 @@ button { color: inherit; }
 
 .result-top { padding-bottom: 13px; border-bottom: 1px solid #eceef1; }
 .result-top > span { display: block; color: var(--muted); font-size: 10px; }
-.result-top strong { display: block; margin-top: 6px; color: var(--green); font-size: 28px; line-height: 1.1; letter-spacing: -.04em; }
-.loss { color: var(--red) !important; }
+.result-top strong { display: block; margin-top: 6px; color: var(--rise); font-size: 28px; line-height: 1.1; letter-spacing: -.04em; }
+.loss { color: var(--fall) !important; }
 .rate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 10px 0; }
 .rate-grid div { padding: 8px; background: #f5f6f7; border-radius: 7px; }
 .rate-grid span { display: block; margin-bottom: 3px; color: var(--muted); font-size: 8px; }
-.rate-grid b { color: var(--green); font-size: 12px; }
+.rate-grid b { color: var(--rise); font-size: 12px; }
 .result-list { margin: 0; }
 .result-list div { display: flex; justify-content: space-between; align-items: center; padding: 7px 1px; border-bottom: 1px solid #eceef1; }
 .result-list dt { color: var(--muted); font-size: 9px; }
@@ -87,6 +113,9 @@ button { color: inherit; }
   .page-shell { width: min(100% - 16px, 430px); padding-top: 5px; }
   .topbar { height: 38px; }
   .calculator-grid { grid-template-columns: 1fr; gap: 8px; }
+  .quick-heading { align-items: start; }
+  .quick-heading p { max-width: 145px; text-align: right; line-height: 1.4; }
+  .quick-layout { grid-template-columns: 1fr; gap: 10px; }
   .result-panel { position: static; }
   .result-top { display: flex; align-items: center; justify-content: space-between; }
   .result-top strong { margin: 0; font-size: 24px; }
@@ -94,6 +123,9 @@ button { color: inherit; }
 
 @media (max-width: 350px) {
   .input-panel, .result-panel { padding: 12px; }
+  .quick-panel { padding: 12px; }
+  .quick-heading p { display: none; }
+  .quick-inputs { grid-template-columns: 1fr; }
   .field-grid { gap: 6px; }
   .number-control input { padding: 0 7px; font-size: 14px; }
   .number-control > b { min-width: 25px; }

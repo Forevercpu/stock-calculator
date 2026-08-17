@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { calculateTrade, type FeeSettings } from './calculator'
+import { calculatePriceChange, calculateTrade, type FeeSettings } from './calculator'
 
 const fees: FeeSettings = {
   commissionEnabled: true,
@@ -10,6 +10,29 @@ const fees: FeeSettings = {
   transferFeeEnabled: true,
   transferFeeRate: 0.001,
 }
+
+describe('calculatePriceChange', () => {
+  it('calculates an increased target price and profit per share', () => {
+    expect(calculatePriceChange(100, 10, 'increase')).toEqual({
+      targetPrice: 110,
+      priceDifference: 10,
+    })
+  })
+
+  it('calculates a decreased target price and loss per share', () => {
+    expect(calculatePriceChange(100, 10, 'decrease')).toEqual({
+      targetPrice: 90,
+      priceDifference: -10,
+    })
+  })
+
+  it('never returns a negative target price', () => {
+    expect(calculatePriceChange(100, 150, 'decrease')).toEqual({
+      targetPrice: 0,
+      priceDifference: -100,
+    })
+  })
+})
 
 describe('calculateTrade', () => {
   it('calculates matched trade profit and all fees precisely', () => {

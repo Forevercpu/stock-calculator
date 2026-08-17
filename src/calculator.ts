@@ -34,7 +34,31 @@ export interface CalculationResult {
   breakEvenSellPrice: number
 }
 
+export type PriceChangeDirection = 'increase' | 'decrease'
+
+export interface PriceChangeResult {
+  targetPrice: number
+  priceDifference: number
+}
+
 const d = (value: number) => new Decimal(Number.isFinite(value) ? Math.max(value, 0) : 0)
+
+export function calculatePriceChange(
+  price: number,
+  percentage: number,
+  direction: PriceChangeDirection,
+): PriceChangeResult {
+  const basePrice = d(price)
+  const rate = d(percentage).div(100)
+  const priceDifference = basePrice.mul(rate)
+  const signedDifference = direction === 'increase' ? priceDifference : priceDifference.negated()
+  const targetPrice = Decimal.max(basePrice.add(signedDifference), 0)
+
+  return {
+    targetPrice: targetPrice.toNumber(),
+    priceDifference: targetPrice.sub(basePrice).toNumber(),
+  }
+}
 
 function commission(amount: Decimal, fees: FeeSettings) {
   if (!fees.commissionEnabled || amount.isZero()) return new Decimal(0)
